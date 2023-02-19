@@ -1,7 +1,6 @@
 import os
-
 from get_file import list_dir
-from merklrTree import creatMerkleTree, merkleTreeNode, verifyTree, show_value
+from merkleTree import creatMerkleTree, merkleTreeNode, verifyTree, show_value
 
 
 # 创建根节点
@@ -27,6 +26,7 @@ if __name__ == '__main__':
         else:
             print('文件路径不存在，请重新输入')
     root1 = get_root(path)
+    # 指定源文件的路径
     root = get_root('origin')
     while True:
         flag = input('请输入选择: 1.展示文件hash值 2.验证文件是否被损坏 3.退出\n')
