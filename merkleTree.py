@@ -49,7 +49,8 @@ def creatMerkleTree(r):
         flag = 0
         while flag < nodeNum:
             newNode = merkleTreeNode(left=r[flag], right=r[flag + 1],
-                                     data=r[flag].data + r[flag + 1].data)
+                                     data=r[flag].data + r[flag + 1].data,
+                                     title='Father_node')
             flag += 2
             secondNodes.append(newNode)
         # 如果现在的上层节点数是一个了，说明到了根结点，返回
@@ -92,7 +93,7 @@ def show_value(r):
         print('第' + str(i) + '层:')
         i += 1
         for b in a:
-            print(b.data)
+            print(b.title + '的hash值--> ' + b.data)
 
 
 def verifyTree(r1, r2):
@@ -136,14 +137,15 @@ def verifyTree(r1, r2):
 
 
 if __name__ == '__main__':
-    leefData = ['1', '2', '3', '4', '5', '55']
-    leefData1 = ['1', '2','3', '4', '5', '78']
+    leefData = ['1', '2', '3', '4', '5', '55', '56']
+    leefData1 = ['1', '1', '3', '4', '5', '78']
+    title = ['/aaa', '/bbb', '/abc', '/cba', '/sss', 'dxs/ddd/cc', '/dss']
     nodes = []
     nodes1 = []
-    for data in leefData:
-        nodes.append(merkleTreeNode(data=data, title=data))
-    for data in leefData1:
-        nodes1.append(merkleTreeNode(data=data, title=data))
+    for data, tit in zip(leefData, title):
+        nodes.append(merkleTreeNode(data=data, title=tit))
+    for data, tit in zip(leefData1, title):
+        nodes1.append(merkleTreeNode(data=data, title=tit))
     root = creatMerkleTree(nodes)
     root1 = creatMerkleTree(nodes1)
     print(verifyTree(root, root1))
