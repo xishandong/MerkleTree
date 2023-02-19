@@ -98,26 +98,49 @@ def show_value(r):
             print(b.data)
 
 
-def verifyTree(root1, root2):
-    list1 = level_order_traversal(root1)
-    list2 = level_order_traversal(root2)
+def verifyTree(r1, r2):
+    list1 = level_order_traversal(r1)
+    list2 = level_order_traversal(r2)
     # 错误列表来存储错误的文件信息
     error_list = []
+    # 如果两个树的根节点数据相等，则直接返回空的错误列表
     if list1[0][0].data == list2[0][0].data:
         return error_list
-    size = len(list1[len(list1) - 1])
-    # 我们直接到叶子节点获取错误信息
-    for i in range(size):
-        if list1[len(list1) - 1][i].data == list2[len(list1) - 1][i].data:
-            pass
-        else:
-            error_list.append(list1[len(list1) - 1][i].title + '-->' + list2[len(list1) - 1][i].title)
+    # 获取两棵树的叶子节点数量,并且处理树结构不同的情况，以及两棵树文件名不同的情况
+    size1 = len(list1[-1])
+    size2 = len(list2[-1])
+    set1 = set(d.title.split('/')[-1] for d in list1[-1])
+    set2 = set(d.title.split('/')[-1] for d in list2[-1])
+    # 处理缺失文件的情况
+    if size1 > size2:
+        diff = set1.symmetric_difference(set2)
+        list1[-1] = [d for d in list1[-1] if d.title.split('/')[-1] not in diff]
+        for di in diff:
+            error_list.append('在下载文件中缺失' + di)
+    # 处理多余文件的情况
+    elif size1 < size2:
+        diff = set2.symmetric_difference(set1)
+        list2[-1] = [d for d in list1[-1] if d.title.split('/')[-1] not in diff]
+        for di in diff:
+            error_list.append('在源文件中不存在' + di)
+    # 处理文件冲突的情况
+    else:
+        diff = set1.symmetric_difference(set2)
+        list1[-1] = [d for d in list1[-1] if d.title.split('/')[-1] not in diff]
+        list2[-1] = [d for d in list2[-1] if d.title.split('/')[-1] not in diff]
+        for di in diff:
+            error_list.append('发生文件冲突' + di + '不存在或多余')
+    # 遍历叶子节点，逐个比较它们的hash值
+    for i in range(len(list1[-1])):
+        if list1[-1][i].data == list2[-1][i].data:
+            continue
+        error_list.append(f"{list1[-1][i].title} --> {list2[-1][i].title}")
     return error_list
 
 
 if __name__ == '__main__':
-    leefData = ['1', '2', '3', '4', '5']
-    leefData1 = ['1', '9', '3', '4', '4']
+    leefData = ['1', '2', '3', '4', '5', '55']
+    leefData1 = ['1', '2','3', '4', '5', '78']
     nodes = []
     nodes1 = []
     for data in leefData:

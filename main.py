@@ -39,7 +39,7 @@ if __name__ == '__main__':
             errors = verifyTree(root, root1)
             if errors:
                 for error in errors:
-                    print('错误的文件为:', error)
+                    print('错误信息:', error)
             else:
                 print('文件没有损坏')
         else:
