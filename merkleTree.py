@@ -37,28 +37,27 @@ def creatMerkleTree(r):
     # 现在处理叶子节点不为0的情况
     else:
         # 如果叶子节点是奇数个，我们需要进行补充
-        while nodeNum % 2 == 1:
+        if nodeNum % 2 == 1:
             # 这里追加尾部的节点
             dup = copy.deepcopy(r[-1:])
             # 将添加节点的是否为添加值设为True
             dup[0].dup = True
             r.extend(dup)
             nodeNum = len(r)
+        # 存放上一层节点
+        secondNodes = []
+        flag = 0
+        while flag < nodeNum:
+            newNode = merkleTreeNode(left=r[flag], right=r[flag + 1],
+                                     data=r[flag].data + r[flag + 1].data)
+            flag += 2
+            secondNodes.append(newNode)
+        # 如果现在的上层节点数是一个了，说明到了根结点，返回
+        if len(secondNodes) == 1:
+            return secondNodes[0]
+        # 如果没有，递归调用该函数继续构建树
         else:
-            # 存放上一层节点
-            secondNodes = []
-            flag = 0
-            while flag < nodeNum:
-                newNode = merkleTreeNode(left=r[flag], right=r[flag + 1],
-                                         data=r[flag].data + r[flag + 1].data)
-                flag += 2
-                secondNodes.append(newNode)
-            # 如果现在的上层节点数是一个了，说明到了根结点，返回
-            if len(secondNodes) == 1:
-                return secondNodes[0]
-            # 如果没有，递归调用该函数继续构建树
-            else:
-                return creatMerkleTree(secondNodes)
+            return creatMerkleTree(secondNodes)
 
 
 def level_order_traversal(r):
