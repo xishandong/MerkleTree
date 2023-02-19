@@ -1,2 +1,2 @@
-this is a info file.
+this is an info file.
 

@@ -1,5 +1,6 @@
 import os
 import re
+from PIL import Image
 
 
 def get(file_dir, all_info):
@@ -8,8 +9,12 @@ def get(file_dir, all_info):
         # 获取文件的绝对路径
         path = os.path.join(file_dir, cur_file)
         if os.path.isfile(path):  # 判断是否是文件还是目录需要用绝对路径
-            file = open(path, 'r')
-            all_lines = file.readlines()
+            try:
+                file = open(path, 'r')
+                all_lines = file.readlines()
+            except:
+                im = open(path, 'rb')
+                all_lines = str(im.read())
             # 如果文件的内容是空值，那么可能会引发碰撞，所以在空文件我们将文件名作为内容，避免碰撞
             if all_lines is not None:
                 lines = ''
@@ -34,4 +39,4 @@ def list_dir(file_path):
 
 
 if __name__ == '__main__':
-    print(list_dir('origin'))
+    list_dir('origin')
