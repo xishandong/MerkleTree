@@ -76,12 +76,10 @@ def level_order_traversal(r):
                 cur = dq.popleft()
                 result.append(cur)
                 # 我们只取不是填充的节点
-                if cur.left:
-                    if not cur.left.dup:
-                        dq.append(cur.left)
-                if cur.right:
-                    if not cur.right.dup:
-                        dq.append(cur.right)
+                if cur.left and not cur.left.dup:
+                    dq.append(cur.left)
+                if cur.right and not cur.right.dup:
+                    dq.append(cur.right)
             results.append(result)
     return results
 

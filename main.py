@@ -1,11 +1,12 @@
 import os
 from get_file import list_dir
 from merkleTree import creatMerkleTree, merkleTreeNode, verifyTree, show_value
+from Improve_MerkleTree import verityTree_improve_version
 
 
 # 创建根节点
-def get_root(path):
-    all_file = list_dir(path)
+def get_root(p):
+    all_file = list_dir(p)
     nodes = []
     for data in all_file:
         nodes.append(merkleTreeNode(data=data['content'], title=data['title']))
@@ -36,7 +37,8 @@ if __name__ == '__main__':
             print('当前文件hash值: ')
             show(root1)
         elif flag == '2':
-            errors = verifyTree(root, root1)
+            # errors = verifyTree(root, root1)
+            errors = verityTree_improve_version(root, root1)
             if errors:
                 for error in errors:
                     print('错误信息:', error)
