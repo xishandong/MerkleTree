@@ -38,11 +38,9 @@ def verityTree_improve_version(r1, r2):
     list2 = list(find_leaves(r2))
     size1 = len(list1)
     size2 = len(list2)
-
     # 使用os来取文件名
     set1 = set(os.path.basename(d.title) for d in list1)
     set2 = set(os.path.basename(d.title) for d in list2)
-
     if size1 > size2:
         diff = set1.symmetric_difference(set2)
         list1 = [d for d in list1 if os.path.basename(d.title) not in diff]

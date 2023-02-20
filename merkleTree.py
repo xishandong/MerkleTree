@@ -135,18 +135,3 @@ def verifyTree(r1, r2):
         error_list.append(f"{list1[-1][i].title} --> {list2[-1][i].title}")
     return error_list
 
-
-if __name__ == '__main__':
-    leefData = ['1', '2', '3', '4', '5', '55', '56']
-    leefData1 = ['1', '1', '3', '4', '5', '78']
-    title = ['/aaa', '/bbb', '/abc', '/cba', '/sss', 'dxs/ddd/cc', '/dss']
-    nodes = []
-    nodes1 = []
-    for data, tit in zip(leefData, title):
-        nodes.append(merkleTreeNode(data=data, title=tit))
-    for data, tit in zip(leefData1, title):
-        nodes1.append(merkleTreeNode(data=data, title=tit))
-    root = creatMerkleTree(nodes)
-    root1 = creatMerkleTree(nodes1)
-    print(verifyTree(root, root1))
-    show_value(root)

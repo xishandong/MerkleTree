@@ -30,7 +30,3 @@ def list_dir(file_path):
     all_info = []
     info = get(file_path, all_info)
     return info
-
-
-if __name__ == '__main__':
-    list_dir('origin')
