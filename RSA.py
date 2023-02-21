@@ -1,9 +1,12 @@
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.Hash import SHA256
+import os
 
 
 def generateKeyPair():
+    if not os.path.exists('./RSA_key'):
+        os.mkdir('./RSA_key')
     # 生成一个新的 RSA 密钥对
     key = RSA.generate(2048)
     # 将私钥导出为 PEM 格式的字符串
@@ -20,6 +23,8 @@ def generateKeyPair():
 
 # 给根节点签名
 def sign(root):
+    # 加载随机的公私钥
+    generateKeyPair()
     # 加载私钥
     with open('RSA_key/private_key.pem', 'rb') as f:
         private_key = RSA.import_key(f.read())
