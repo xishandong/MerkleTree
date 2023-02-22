@@ -2,6 +2,8 @@ import copy
 import hashlib
 from collections import deque
 
+from Cython import typeof
+
 
 class merkleTreeNode:
     # 初始化树节点
@@ -18,12 +20,11 @@ class merkleTreeNode:
         self.title = title
 
     # 计算节点的hash值
-    def encrypt(self, text):
-        # 如果当前的内容是空值，我们把文件名增加到内容中去
-        if text is None:
-            text += self.title
+    @staticmethod
+    def encrypt(text):
         hash256 = hashlib.sha256()
-        text = text.encode('utf-8')
+        if typeof(text) == 'str':
+            text = text.encode('utf-8')
         hash256.update(text)
         return hash256.hexdigest()
 
