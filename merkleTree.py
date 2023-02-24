@@ -1,7 +1,6 @@
 import copy
 import hashlib
 from collections import deque
-
 from Cython import typeof
 
 
